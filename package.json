@@ -1,5 +1,5 @@
 {
-  "name": "@privatus/postman",
+  "name": "@privatus-analytics/postman",
   "version": "1.0.0",
   "private": true,
   "description": "Builds the Privatus Analytics API collection for the Postman Public API Network from /openapi.json.",
