@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Check the committed collection loads in the Postman SDK
+        run: |
+          node -e '
+            const fs = require("fs");
+            const { Collection } = require("postman-collection");
+            const raw = JSON.parse(fs.readFileSync("dist/privatus-analytics.postman_collection.json", "utf8"));
+            if (!String(raw.info.schema).includes("v2.1.0")) throw new Error("not a v2.1.0 collection");
+            const c = new Collection(raw);
+            let n = 0;
+            c.forEachItem(() => n++);
+            if (n < 50) throw new Error("only " + n + " requests");
+            if (!c.auth || c.auth.type !== "bearer") throw new Error("no collection-level bearer auth");
+            console.log(c.name + ": " + n + " requests");
+          '
+      - name: Build from a small offline OpenAPI document
+        run: |
+          cat > "$RUNNER_TEMP/openapi.json" <<'JSON'
+          {
+            "openapi": "3.1.0",
+            "info": { "title": "Privatus Analytics API", "version": "1" },
+            "servers": [{ "url": "https://privatusanalytics.com/api/v1" }],
+            "components": { "securitySchemes": { "bearer": { "type": "http", "scheme": "bearer" } } },
+            "security": [{ "bearer": [] }],
+            "paths": {
+              "/sites/{site_id}": {
+                "get": {
+                  "summary": "Get a site",
+                  "parameters": [{ "name": "site_id", "in": "path", "required": true, "schema": { "type": "string" } }],
+                  "responses": { "200": { "description": "OK" } }
+                }
+              }
+            }
+          }
+          JSON
+          node build.js "$RUNNER_TEMP/openapi.json"
+          node -e '
+            const c = require("./dist/privatus-analytics.postman_collection.json");
+            if (!c.item || c.item.length === 0) throw new Error("empty build");
+            console.log("built " + c.item.length + " top-level items");
+          '
