@@ -1,35 +1,18 @@
 # Privatus Analytics API for Postman
 
-**The Privatus Analytics API, ready to run in Postman.** Simple, private website
-analytics with no cookies, honest numbers, and a dashboard you understand in
-seconds.
+**Try the Privatus Analytics API in Postman, with every request ready to send.**
 
-## Why Privatus Analytics
+You want to use the Privatus Analytics API, but writing each request by hand is
+slow, and it is hard to know where to start.
 
-**Google Analytics is slow, confusing and hungry for data.** It sends what your
-visitors do to Google. In many countries it means showing a cookie pop-up (the
-box that asks visitors to accept cookies), and many people click "reject", so
-you never see them. Bots pad the numbers that are left.
+This collection has every request of the API, sorted by topic, in Postman (the
+app for trying web APIs). Paste your API token once and every request uses it.
 
-**Privatus Analytics fixes that.** It counts visits to your website without
-cookies and never stores IP addresses. Bots are filtered out before they are
-counted. Your data is never sold or shared.
+So you go from a new token to your first numbers in four requests. The numbers
+are honest too. Privatus Analytics counts visits without cookies, so there is no
+cookie pop-up for your analytics, and it leaves bots out.
 
-What you get:
-
-- **A dashboard you understand in seconds.** Visitors, top pages and where
-  people came from, all on one screen.
-- **No cookie pop-up needed for our analytics.** We set no cookies and store no
-  personal data. Laws differ by country, so check your own legal advice.
-- **Honest numbers.** Known bots and fake traffic are left out on every plan.
-- **Try it in minutes.** Every request of the API is ready to run in Postman,
-  with your token set once for the whole collection.
-- **Data you own.** We never sell it or show you ads, and you can pull it out
-  any time through the API.
-
-**Start free.** The Free plan has 10,000 events a month and 3 sites, with no
-card. Every new account also gets 14 days of Pro free, with no card. [Create
-your account](https://privatusanalytics.com).
+**Free plan, no card:** 10,000 events a month (an event is a page view or an action you track) on up to 3 sites. [Start free at privatusanalytics.com](https://privatusanalytics.com).
 
 ## What this package does
 
